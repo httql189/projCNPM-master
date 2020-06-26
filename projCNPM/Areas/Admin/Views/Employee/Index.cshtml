@@ -25,7 +25,7 @@
         <div class="">
             <div class="">
                 <h1 class="page-header">
-            Proflie all Employees
+                    Proflie all Employees
                 </h1>
                 <ol class="breadcrumb">
                     <li>
@@ -33,7 +33,7 @@
                     </li>
                     <li>
                         <i class="fa fa-user"></i> @*<a href="@Url.Action("index","QuanLyUser")">Nhân viên</a>*@
-                  Employees
+                        Employees
                     </li>
                 </ol>
             </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table id="table-tai" class="table table-bordered table-striped table-hover">
+            <table id="table-taikhoan" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr class="success">
                         <th>
@@ -56,23 +56,15 @@
                         <th>
                             Full Name
                         </th>
-                        <th>
-                            Address
-                        </th>
-                        <th>
-                            Birth Date
-                        </th>
+
+
                         <th>
                             CreatedDate
                         </th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                        <th>CMND</th>
                         <th>Status</th>
                         <th>
 
-                           @Model.Count
+                            @Model.Count
                         </th>
 
 
@@ -89,20 +81,16 @@
 
                                 <td>@item.UserName</td>
                                 <td>@item.FirstName @item.LastName</td>
-                                <td>@item.Address, @item.District, @item.Province </td>
-                                <td>@item.BirthDate</td>
+
+
                                 <td>@item.CreatedDate</td>
-                                <td>
-                                   @item.Email
-                                </td>
-                                <td>@item.Phone</td>
-                                <td>@item.CMND</td>
+
                                 <td>@item.Status</td>
-                                <td>
-                                   
-                                    <a class="btn btn-warning" href="@Url.Action("Edit", "Employee", new {@id = @item.MemberID })"><i class="fa fa-pencil-square-o x5" aria-hidden="true"></i>Edit</a>
-                                    
-                                })
+                                <td style="text-align:center">
+
+                                    <a class="btn btn-warning center" ><i class="fa fa-pencil-square-o x5" aria-hidden="true" id="btnedit"></i>Edit</a>
+                                    <a class="btn btn-primary center" href="@Url.Action("Details", "Employee", new {@id = @item.MemberID })"><i class="fa fa-pencil-square-o x5" aria-hidden="true"></i>Details</a>
+
                                 </td>
                             </tr>
                         }
@@ -144,3 +132,71 @@
     </div>
 </div>
 
+<!-- Popup Edit-->
+<div class="modal fade" id="ShowModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div id="message1">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Update Successfully!<br />
+                       
+                        </strong>
+                    </div>
+                </div>
+                <div id="message6">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>Xác nhận thành công!</strong>
+                    </div>
+                </div>
+                <div id="message2">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>UserName or Password is invalid</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body modal-body-sub_agile">
+                <div class="main-mailposi">
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                </div>
+                <div class="modal_body_left modal_body_left1">
+                    <h3 class="agileinfo_sign">Đăng nhập </h3>
+
+                    <form id="editform">
+
+                        <div class="styled-input agile-styled-input-top">
+
+                            <input type="text" name="UserName" id="user" placeholder="Tên tài khoản" required="" />
+                        </div>
+                        <div class="styled-input">
+                            <input type="password" name="Password" id="Password" placeholder="Mật khẩu" required="" />
+                        </div>
+                        <p>
+                            Bạn chưa có tài khoản?
+                            <a href="#" data-toggle="modal" data-target="#myModal2">
+                                Đăng ký ngay
+                            </a>
+                        </p>
+
+                    </form>
+                    <button class="btn btn-info form-control" id="btnLogin" onclick="loginUser()"><i class="glyphicon glyphicon-log-in"></i> Đăng Nhập</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- //Modal content-->
+    </div>
+</div>
+<script>
+    $("#btnedit").click(function () {
+
+        $("#ShowModal").show();
+
+    });
+</script>
