@@ -1,0 +1,127 @@
+﻿@model Model.EF.Member
+    
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="left-content">
+    <div class="mother-grid-inner">
+        <div class="row">
+            <h1>Profile Admin</h1>
+             @if(TempData["AlertMessage"]!=null)
+            {
+                <div id="AlertBox" class="alert alert-success">
+                    @TempData["AlertMessage"]
+                </div>
+            }
+            <ol class="breadcrumb">
+                <li>
+                    <i class="fa fa-dashboard"></i> <a href="@Url.Action("Index","Home")">Home</a>
+                </li>
+                <li>
+                    <i class="fa fa-fw fa-user"></i>Profiles Admin
+                </li>
+            </ol>
+            <hr />
+            <div class="col-md-8 col-sm-9">
+                <form class="form-horizontal" role="form" enctype="multipart/form-data">
+
+                    <!--xác nhan mat khau-->
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Full Name</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.FirstName @Model.LastName
+                            </div>
+                        </div>
+                    </div>
+                    <!--ho ten-->
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Birth Date</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.BirthDate
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Created Date</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.CreatedDate
+                            </div>
+                        </div>
+                    </div>
+
+       
+
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Email</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.Email
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Phone</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.Phone
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>CMND</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.CMND
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="control-label  col-md-4 col-sm-4">
+                            <label>Address</label>
+                        </div>
+                        <div class="col-md-8 col-sm-8">
+                            <div class="form-control">
+                                @Model.Address, @Model.District, @Model.Province
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-4">
+                           <a href="@Url.Action("Edit","Home")" class="btn btn-primary btn-lg">Edit</a>
+                           
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

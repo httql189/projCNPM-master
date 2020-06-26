@@ -1,0 +1,158 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+  
+            <!--header start here-->
+            @*//RenderPage("TopMenu.cshtml")*@
+            <!--heder end here-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Home</a> <i class="fa fa-angle-right"></i></li>
+            </ol>
+            <!--four-grids here-->
+
+            <div class="four-grids">
+                <a href="@Url.Action("Index","Home")">
+                    <div class="col-md-3 four-grid">
+                        <div class="four-agileits">
+                            <div class="icon">
+                                <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="four-text">
+                                <h3>Nhân sự</h3>
+                                @*@{
+                                    var count = db.NhanViens.Where(n => n.TrangThai == true).ToList().Count - 1;
+                                }*@
+                                @*<h4>@count</h4>*@
+
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("DanhSachNhanLuong","LuongAdmin")">
+
+                    <div class="col-md-3 four-grid">
+                        <div class="four-agileinfo">
+                            <div class="icon">
+                                <i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i>
+                            </div>
+                            <div class="four-text">
+                                <h3>Tổng lương</h3>
+                                @*@{
+                                    var luong = db.Luongs.ToList();
+                                    double tong = 0;
+                                    foreach (var item in luong)
+                                    {
+                                        double tienthue = 0, phucap = 0, luongcb = 0, xh = 0, yt = 0, tn = 0;
+
+                                        item.HeSoLuong = item.HeSoLuong == null ? 0 : item.HeSoLuong;
+                                        luongcb = item.LuongToiThieu * (double)item.HeSoLuong;
+
+                                        item.BHXH = item.BHXH == null ? 0 : item.BHXH;
+                                        xh = (double)item.BHXH * item.LuongToiThieu / 100;
+
+                                        item.BHYT = item.BHYT == null ? 0 : item.BHYT;
+                                        yt = (double)item.BHYT * item.LuongToiThieu / 100;
+
+                                        item.BHTN = item.BHTN == null ? 0 : item.BHTN;
+                                        tn = (double)item.BHTN * item.LuongToiThieu / 100;
+
+
+                                        item.PhuCap = item.PhuCap == null ? 0 : item.PhuCap;
+                                        phucap = item.LuongToiThieu * (double)item.PhuCap;
+
+                                        item.ThueThuNhap = item.ThueThuNhap == null ? 0 : item.ThueThuNhap;
+                                        tienthue = item.LuongToiThieu * (int)item.ThueThuNhap / 100;
+
+                                        tong = tong + (double)luongcb - (double)(xh + yt + tn) - (double)tienthue + (double)phucap;
+
+                                    }
+
+                                }*@
+                                @*<h4>@string.Format("{0:#,#}", @tong).Replace(",", ",") vnđ</h4>*@
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </a>
+                <a href="@Url.Action("index","PhongBanAdmin")">
+                    <div class="col-md-3 four-grid">
+                        <div class="four-w3ls">
+                            <div class="icon">
+                                <i class="glyphicon glyphicon-tasks" aria-hidden="true"></i>
+                            </div>
+                            <div class="four-text">
+                                @*@{
+                                    var countPb = db.PhongBans.ToList().Count;
+                                }*@
+
+                                <h3>Tổng số phòng ban</h3>
+
+                                @*<h4>@countPb</h4>*@
+
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+                <a href="@Url.Action("index","KhenThuong")">
+                    <div class="col-md-3 four-grid">
+                        <div class="four-wthree">
+                            <div class="icon">
+                                <i class="glyphicon glyphicon-gift" aria-hidden="true"></i>
+                            </div>
+                            <div class="four-text">
+                                @*@{
+                                    var khen = db.KhenThuongs.ToList().Count();
+                                }
+                                <h3>Khen Thưởng</h3>
+                                <h4>@khen</h4>*@
+
+                            </div>
+
+                        </div>
+                    </div>
+                </a>
+                <div class="clearfix"></div>
+            </div>
+
+            <!--//four-grids here-->
+            <!--agileinfo-grap-->
+            <!--//agileinfo-grap-->
+            <!--photoday-section-->
+
+
+            <div class="clearfix"></div>
+
+            <!--//photoday-section-->
+            <!--w3-agileits-pane-->
+            <!--//w3-agileits-pane-->
+            <!-- script-for sticky-nav -->
+            <script>
+                $(document).ready(function () {
+                    var navoffeset = $(".header-main").offset().top;
+                    $(window).scroll(function () {
+                        var scrollpos = $(window).scrollTop();
+                        if (scrollpos >= navoffeset) {
+                            $(".header-main").addClass("fixed");
+                        } else {
+                            $(".header-main").removeClass("fixed");
+                        }
+                    });
+
+                });
+            </script>
+            <!-- /script-for sticky-nav -->
+            <!--inner block start here-->
+            <div class="inner-block">
+
+            </div>
+            <!--inner block end here-->
+            <!--copy rights start here-->
+            <!--COPY rights end here-->
+   

@@ -1,0 +1,427 @@
+﻿
+@{ var session = (projCNPM.Common.UserLogin)Session[projCNPM.Common.CommonConstant.USER_SESSION];}
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link href="~/Assets/client/css/style_load.css" rel="stylesheet" />
+<link href="/Assets/client/css/style_alert.css" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<div class="header-bot">
+    <div class="header-bot_inner_wthreeinfo_header_mid">
+        <!-- header-bot-->
+        <div class="col-md-4 logo_agile">
+            <h1>
+                <a href="#">
+                    <img src="~/Assets/client/images/logo-main.png" alt=" " width="100" height="80">
+                </a>
+            </h1>
+        </div>
+        <!-- header-bot -->
+        <div class="col-md-8 header">
+            <!-- header lists -->
+            <ul>
+                <li class="active">
+                    <a class="nav-stylehead" href="/homeuser/index">
+                        Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a class="nav-stylehead" href="/product/index">
+                        Thức uống
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle nav-stylehead" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        Đồ ăn
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu multi-column columns-3">
+                    </ul>
+                </li>
+                @if (session == null)
+                {
+                    <li>
+                        <a href="#" data-toggle="modal" id="btnSignIn">
+                            <span class="fa fa-unlock-alt" aria-hidden="true"></span> Đăng nhập
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-toggle="modal" id="btnSignUp">
+                            <span class="fa fa-pencil-square-o" aria-hidden="true"></span> Đăng ký
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                                <a class="dropdown-toggle nav-stylehead" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   @session.UserName <span class="caret"></span> </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu multi-column columns-3" aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/User/Index">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Thông tin tài khoản
+                                    </a>
+                                    <a class="dropdown-item" href="/User/OrderDetail">
+                                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đơn Hàng
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutmodal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Đăng Xuất
+                                    </a>
+                                </div>
+
+                    </li>
+                }
+                <li>
+
+                    <form action="#" method="post" class="last">
+                        <input type="hidden" name="cmd" value="_cart">
+                        <input type="hidden" name="display" value="1">
+                        <button class="w3view-cart" type="submit" name="submit" value="">
+                            <i class="fa fa-cart-arrow-down" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </li>
+            </ul>
+            <!-- //header lists -->
+            <!-- search -->
+            <!-- //cart details -->
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="ShowModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div id="message1">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Success Message!<br />
+                            send an email to your email address with confirmation link!<br />
+                            please check your inbox
+                        </strong>
+                    </div>
+                </div>
+                <div id="message6">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>Xác nhận thành công!</strong>
+                    </div>
+                </div>
+                <div id="message2">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>UserName or Password is invalid</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body modal-body-sub_agile">
+                <div class="main-mailposi">
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                </div>
+                <div class="modal_body_left modal_body_left1">
+                    <h3 class="agileinfo_sign">Đăng nhập </h3>
+
+                    <form id="loginForm">
+
+                        <div class="styled-input agile-styled-input-top">
+
+                            <input type="text" name="UserName" id="user" placeholder="Tên tài khoản" required="" />
+                        </div>
+                        <div class="styled-input">
+                            <input type="password" name="Password" id="Password" placeholder="Mật khẩu" required="" />
+                        </div>
+                        <p>
+                            Bạn chưa có tài khoản?
+                            <a href="#" data-toggle="modal" data-target="#myModal2">
+                                Đăng ký ngay
+                            </a>
+                        </p>
+
+                    </form>
+                    <button class="btn btn-info form-control" id="btnLogin" onclick="loginUser()"><i class="glyphicon glyphicon-log-in"></i> Đăng Nhập</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- //Modal content-->
+    </div>
+</div>
+
+
+<div class="modal fade" id="logoutmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body modal-body-sub_agile">
+                <div class="main-mailposi">
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                </div>
+                <div class="modal_body_left modal_body_left1">
+                    <h2 class="agileinfo_sign">Bạn có muốn đăng xuất?</h2>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <a class="btn btn-primary" @Html.ActionLink("Đăng Xuất", "Logout", "User") </a>
+                    @*<img src="/Assets/client/images/loader.gif" />*@
+                </div>
+            </div>
+        </div>
+        <!-- //Modal content-->
+    </div>
+</div>
+<!-- //Modal1 -->
+<!-- //signin Model -->
+<!-- signup Model -->
+<!-- Modal2 -->
+<div class="modal fade" id="ShowModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div id="message3">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Kiểm tra Email của bạn!<br />
+                        </strong>
+                    </div>
+                </div>
+                <div id="message4">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>Tên đăng nhập hoặc mật khẩu không đúng</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body modal-body-sub_agile">
+                <div class="main-mailposi">
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                </div>
+                <div class="modal_body_left modal_body_left1">
+                    <h3 class="agileinfo_sign">Đăng ký tài khoản</h3>
+                    <form id="Registration">
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" id="username" placeholder="Tên tài khoản" name="UserName" required="">
+                        </div>
+                        <div class="styled-input">
+                            <input type="email" id="email" placeholder="E-mail" name="Email" required="">
+                        </div>
+                        <div class="styled-input">
+                            <input type="password" placeholder="Mật khẩu" name="password" id="password1" required="">
+                        </div>
+                        <div class="styled-input">
+                            <input type="password" placeholder="Xác nhận mật khẩu" name="Confirm Password" id="password2" required="">
+                        </div>
+
+                    </form>
+                    <input type="submit" value="Đăng ký" onclick="SaveForm()">
+                    <div class="load" id="xoay">
+                        <img src="/Assets/client/images/loader.gif" />
+                    </div>
+                    @*<img src="/Assets/client/images/loader.gif" />*@
+                </div>
+            </div>
+        </div>
+        <!-- //Modal content-->
+    </div>
+</div>
+
+<div class="modal fade" id="ShowModal3" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div id="message5">
+                    <div class="alert alert-success">
+                        <span class="glyphicon glyphicon-ok"></span><strong>
+                            Đăng ký thành công!<br />
+                            Vui lòng nhập mã xác nhận được gửi đến Email của bạn!<br />
+                        </strong>
+                    </div>
+                </div>
+                <div id="message7">
+                    <div class="alert alert-danger">
+                        <span class="glyphicon glyphicon-remove"></span><strong>Mã xác nhận không chính xác!</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body modal-body-sub_agile">
+                <div class="main-mailposi">
+                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
+                </div>
+                <div class="modal_body_left modal_body_left1">
+                    <h3 class="agileinfo_sign">Đăng ký tài khoản</h3>
+                    <form id="Confirm">
+                        <div class="styled-input agile-styled-input-top">
+                            <input type="text" id="verifycode" placeholder="Mã xác nhận" name="VerifyCode" required="">
+                        </div>
+
+                    </form>
+                    <input type="submit" value="Xác nhận" id="notify" onclick="ConfirmForm()">
+                </div>
+            </div>
+        </div>
+
+        <!-- //Modal content-->
+    </div>
+
+</div>
+
+
+
+<script>
+    $('#notify').click(function () {
+        $('.alert').addClass("show");
+        $('.alert').removeClass("hide");
+        $('.alert').addClass("showAlert");
+        setTimeout(function () {
+            $('.alert').removeClass("show");
+            $('.alert').addClass("hide");
+        }, 5000);
+    });
+    $('.close-btn').click(function () {
+        $('.alert').removeClass("show");
+        $('.alert').addClass("hide");
+    });
+</script>
+<script>
+
+    $("#btnSignIn").click(function () {
+        $("#ShowModal").modal({
+            backdrop: 'static',
+        });
+        $("#message1").hide();
+        $("#message2").hide();
+        $("#message6").hide();
+    });
+
+    $("#btnSignUp").click(function () {
+        $("#ShowModal2").modal({
+            backdrop: 'static',
+        });
+        $("#message3").hide();
+        $("#message4").hide();
+        $("#xoay").hide();
+    });
+
+
+    function SaveForm() {
+        $("#xoay").show();
+        var data = $("#Registration").serialize();
+        $.ajax({
+            type: "POST",
+            url: "/User/SaveData",
+            data: data,
+            success: function (result) {
+                if (result == "Tên tài khoản đã tồn tại" || result == "Email đã tồn tại") {
+                    alert(result);
+                    $("#xoay").hide();
+                }
+                else {
+                    $("#ShowModal3").modal({
+                        backdrop: 'static',
+                    });
+                    $("#message7").hide();
+                    $('.alert').addClass("show");
+                    $('.alert').removeClass("hide");
+                    $('.alert').addClass("showAlert");
+                    setTimeout(function () {
+                        $('.alert').removeClass("show");
+                        $('.alert').addClass("hide");
+                    }, 5000);
+                    $("#message5").show();
+                }
+
+            },
+            error: function () {
+                alert("fail");
+            }
+        })
+    }
+
+    function loginUser() {
+        var data = {
+            "userid": $("#user").val(),
+            "password": $("#Password").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/User/CheckValidUser",
+            data: data,
+            success: function (result) {
+                if (result == "Fail" && (data.userid != "" || data.password != "")) {
+                    $('.alert').addClass("show");
+                    $('.alert').removeClass("hide");
+                    $('.alert').addClass("showAlert");
+                    setTimeout(function () {
+                        $('.alert').removeClass("show");
+                        $('.alert').addClass("hide");
+                    }, 5000);
+                    $("#message2").show();
+                    $("#message1").hide();
+                    $("#loginForm")[0].reset();
+                }
+                else if (result == "Success" && (data.userid != "" || data.password != "")) {
+                    window.location.href = "/HomeUser/Index";
+                }
+            },
+
+        });
+
+    }
+
+    function ConfirmForm() {
+        var data = {
+            "username": $("#username").val(),
+            "verifycode": $("#verifycode").val()
+        };
+
+        console.log(data);
+        //var data = $("#Confirm").serialize();
+        $.ajax({
+            type: "post",
+            url: "/User/ConfirmCode",
+            data: data,
+            success: function (result) {
+                if (result == "Success") {
+                    $("#ShowModal2").hide();
+                    $("#ShowModal3").hide();
+                    $("#xoay").hide();
+                    $("#message2").hide();
+                    $("#message1").hide();
+                    $("#ShowModal").modal({
+                        backdrop: 'static',
+                    });
+                    $("#message5").show();
+
+                }
+                else if (result == "Fail") {
+                    $("#message5").hide();
+                    $("#message7").show();
+                }
+            },
+            error: function () {
+                $("#message5").hide();
+                $("#message7").show();
+            }
+        });
+    }
+
+</script>
+
