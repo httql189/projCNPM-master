@@ -16,5 +16,11 @@ namespace projCNPM.Areas.Admin.Controllers
             var employee = db.Members.Where(x => x.GroupID == "NV").ToList();
             return View(employee);
         }
+        public ActionResult Edit()
+        {
+            var employee = db.Members.Where(x => x.GroupID == "NV").ToList();
+            return View(employee);
+        }
+
     }
 }
