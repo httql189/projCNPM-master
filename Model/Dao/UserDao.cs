@@ -16,7 +16,17 @@ namespace Model.Dao
             db = new OnlineSMSystemDB();
         }
 
-
+        public bool ChangeStatusEmployee(long id, bool? status)
+        {
+            try
+            {
+                var user = db.Members.Find(id);
+                    user.Status = status;
+                db.SaveChanges();
+                return true;
+            }
+            catch { return false; }
+        }
 
         public bool EditAdmin( Member entity)
         {
