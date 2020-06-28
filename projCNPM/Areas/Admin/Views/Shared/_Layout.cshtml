@@ -15,8 +15,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <link href="~/Assets/Admin/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
     <!-- Bootstrap Core CSS -->
     <link href="~/Assets/Admin/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+
     <!-- Custom CSS -->
     <link href="~/Assets/Admin/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/toastr.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Assets/Admin/css/morris.css" type="text/css" />
     <!-- Graph CSS -->
     <link href="~/Assets/Admin/css/font-awesome.css" rel="stylesheet">
@@ -36,12 +38,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <body>
     <div class="page-container">
         <!--/content-inner-->
-        @*<div class="left-content">
-            <div class="mother-grid-inner">*@
-        @RenderPage("../Home/TopMenu.cshtml")
-        @RenderBody()
-        @*</div>
-            </div>*@
+        <div class="left-content">
+            <div class="mother-grid-inner">
+                @RenderPage("../Home/TopMenu.cshtml")
+                @RenderBody()
+            </div>
+        </div>
 
 
         <!--//content-inner-->
@@ -149,6 +151,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </script>
     }
     <script>
+
         var toggle = true;
 
         $(".sidebar-icon").click(function () {
@@ -172,7 +175,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <!-- Bootstrap Core JavaScript -->
     <script src="~/Assets/Admin/js/jquery.js"></script>
     <script src="~/Assets/Admin/js/bootstrap.min.js"></script>
+
     <script src="~/Assets/Admin/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/toastr.js"></script>
     <!-- /Bootstrap Core JavaScript -->
     <!-- morris JavaScript -->
     <script src="~/Assets/Admin/js/raphael-min.js"></script>
@@ -191,6 +196,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
     <script>
+
         $(document).ready(function () {
             //BOX BUTTON SHOW AND CLOSE
             jQuery('.small-graph-box').hover(function () {
