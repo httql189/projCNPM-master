@@ -1,25 +1,19 @@
 ﻿@using Model.EF
+
 @model List<Member>
 
 
+
 @{
+    OnlineSMSystemDB db = new OnlineSMSystemDB();
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<script type="text/javascript">
-    var tableToExcel = (function () {
-        var uri = 'data:application/vnd.ms-excel;base64,'
-            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
-            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
-        return function (table, name) {
-            if (!table.nodeType) table = document.getElementById(table)
-            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
-            window.location.href = uri + base64(format(template, ctx))
-        }
-    })()
-</script>
+
+
+
+
 <div class="left-content">
     <div class="mother-grid-inner">
         <div class="">
@@ -29,7 +23,7 @@
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <i class="fa fa-dashboard"></i> <a href="@Url.Action("Index","Home")">Home</a>
+                        <i class="fa fa-dashboard"></i> <a href="@Url.Action("Index", "Home")">Home</a>
                     </li>
                     <li>
                         <i class="fa fa-user"></i> @*<a href="@Url.Action("index","QuanLyUser")">Nhân viên</a>*@
@@ -74,9 +68,10 @@
                     @{
                         foreach (var item in Model)
                         {
-                            string tenTrinhDo = string.Empty;
-                            string gioitinh = string.Empty;
-
+                            string _icon = string.Empty;
+                            int sst = 1;
+                            //string gioitinh = string.Empty;
+                            //string username = @item.UserName;
                             <tr>
 
                                 <td>@item.UserName</td>
@@ -85,118 +80,156 @@
 
                                 <td>@item.CreatedDate</td>
 
-                                <td>@item.Status</td>
-                                <td style="text-align:center">
-
-                                    <a class="btn btn-warning center" ><i class="fa fa-pencil-square-o x5" aria-hidden="true" id="btnedit"></i>Edit</a>
-                                    <a class="btn btn-primary center" href="@Url.Action("Details", "Employee", new {@id = @item.MemberID })"><i class="fa fa-pencil-square-o x5" aria-hidden="true"></i>Details</a>
+                                <td>
+                                    @{
+                                        switch (item.Status)
+                                        {
+                                            case true:
+                                                _icon = "fa-toggle-on";
+                                                break;
+                                            case false:
+                                                _icon = "fa-toggle-off";
+                                                break;
+                                        }
+                                    }
+                                    <div class="huhu" id="success">
+                                        <i onclick="myFunction(this)" class="fa @_icon" data-id="@item.MemberID" id="@item.Status.ToString()"></i>
+                                    </div>
 
                                 </td>
+                                <td style="text-align:center">
+
+
+
+                                    @*<button href="#ShowModal" class="btn-dark" data-toggle="modal" value="@item.Status" onclick="ConfirmForm(@item.MemberID,@sst)">Click</button>*@
+
+
+                                    <a class="btn btn-primary center anchorDetail" href="javascript:void(0);" data-id="@item.MemberID"><i class="fa fa-pencil-square-o x5" aria-hidden="true"></i>Details</a>
+
+                                    @*<a class="btn btn-primary center" href="@Url.Action("Details", "Employee", new { @id = @item.MemberID })"><i class="fa fa-pencil-square-o x5" aria-hidden="true"></i>Details</a>*@
+
+                                </td>
+
                             </tr>
                         }
                     }
+
 
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<div class="left-content">
-    <div class="mother-grid-inner">
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-center">Bạn đang xóa</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
 
-                        @using (Html.BeginForm("Delete", "UserAdmin", FormMethod.Get))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="form-actions no-color text-center">
-                                <input type="submit" value="Xóa" class="btn btn-danger" />
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
-                            </div>
-                        }
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Popup Edit-->
-<div class="modal fade" id="ShowModal" role="dialog">
+<div id='myModal' class='modal' data-toggle="modal">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
-            <div class="modal-header">
-
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <div id="message1">
-                    <div class="alert alert-success">
-                        <span class="glyphicon glyphicon-ok"></span><strong>
-                            Update Successfully!<br />
-                       
-                        </strong>
-                    </div>
-                </div>
-                <div id="message6">
-                    <div class="alert alert-success">
-                        <span class="glyphicon glyphicon-ok"></span><strong>Xác nhận thành công!</strong>
-                    </div>
-                </div>
-                <div id="message2">
-                    <div class="alert alert-danger">
-                        <span class="glyphicon glyphicon-remove"></span><strong>UserName or Password is invalid</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-body modal-body-sub_agile">
-                <div class="main-mailposi">
-                    <span class="fa fa-envelope-o" aria-hidden="true"></span>
-                </div>
-                <div class="modal_body_left modal_body_left1">
-                    <h3 class="agileinfo_sign">Đăng nhập </h3>
-
-                    <form id="editform">
-
-                        <div class="styled-input agile-styled-input-top">
-
-                            <input type="text" name="UserName" id="user" placeholder="Tên tài khoản" required="" />
-                        </div>
-                        <div class="styled-input">
-                            <input type="password" name="Password" id="Password" placeholder="Mật khẩu" required="" />
-                        </div>
-                        <p>
-                            Bạn chưa có tài khoản?
-                            <a href="#" data-toggle="modal" data-target="#myModal2">
-                                Đăng ký ngay
-                            </a>
-                        </p>
-
-                    </form>
-                    <button class="btn btn-info form-control" id="btnLogin" onclick="loginUser()"><i class="glyphicon glyphicon-log-in"></i> Đăng Nhập</button>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+            <div id='myModalContent'></div>
         </div>
-        <!-- //Modal content-->
     </div>
+
 </div>
 <script>
-    $("#btnedit").click(function () {
+    function myFunction(x) {
+        x.classList.toggle("fa-toggle-off");
+        x.classList.toggle('fa-toggle-on');
+        var id = $(x).attr('data-id');
 
-        $("#ShowModal").show();
+        var _class = $(x).attr('class');
+        if (_class == "fa fa-toggle-off") {
+            x.id = "false";
+            $.ajax({
+                type: "POST",
+                url: '/Employee/changeStatus',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ "id": id }),
+                datatype: "json",
+                success: function (response) {
+                    toastr.success("Đã khóa", response);
+                    console.log(_class);
+                },
+                error: function () {
+                    alert("hi");
+                    console.log(data);
+                }
+            });
+        }
+        else if (_class == "fa fa-toggle-on") {
+            x.id = "true";
+            $.ajax({
+                type: "POST",
+                url: '/Employee/changeStatus',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ "id": id }),
+                datatype: "json",
+                success: function (data) {
+                    toastr.success("Đã mở khóa", data);
+                    console.log(_class);
+                },
+                error: function () {
+                    alert("hú");
+                    console.log(data);
+                }
+            });
+        }
 
+    }
+    var TeamDetailPostBackURL = '/Employee/myModal';
+    $(function () {
+        $(".anchorDetail").click(function () {
+            var $buttonClicked = $(this);
+            var id = $buttonClicked.attr('data-id');
+
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Id": id },
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                    $('#myModal').show();
+
+                },
+                error: function () {
+                    alert("hú");
+                }
+            });
+        });
     });
 </script>
+<script language="JavaScript" type="text/javascript">
+
+    function ConfirmForm(userid, sst) {
+        //var us = "";
+        //us += username;
+        var data = {
+            "userid": userid,
+            "sst": sst
+        };
+        document.getElementById("idf").innerHTML = data.userid
+
+    }
+    $('#notify').click(function () {
+        $('.alert').addClass("show");
+        $('.alert').removeClass("hide");
+        $('.alert').addClass("showAlert");
+        setTimeout(function () {
+            $('.alert').removeClass("show");
+            $('.alert').addClass("hide");
+        }, 5000);
+    });
+    $('.close-btn').click(function () {
+        $('.alert').removeClass("show");
+        $('.alert').addClass("hide");
+    });
+
+    function btnedit() {
+
+        $("#message1").hide();
+        $("#message2").hide();
+        $("#message6").hide();
+    }
+
+</script>
+<!-- Popup Edit-->
