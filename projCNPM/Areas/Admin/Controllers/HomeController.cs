@@ -61,7 +61,7 @@ namespace projCNPM.Areas.Admin.Controllers
                     if (result)
                     {
 
-                    SetAlert("Update Profile Success!!", "success");
+                    SetAlert("Update Status Success!!", "success");
                         return RedirectToAction("Details","Home");
                     }
                     else
